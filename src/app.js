@@ -1,37 +1,39 @@
 "use strict";
 import express from "express";
 import path from "path";
-import fs from "fs";
 import { fileURLToPath } from "url";
+import { readPage, renderPage } from "./util/templateEngine/templateEngine.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, "../public")));
+// Serve static files (CSS, images)
+app.use(express.static(path.join(__dirname, "public")));
 
+// Homepage
 app.get("/", (req, res) => {
-  res.sendFile("pages/index.html", { root: __dirname });
+  const indexContent = readPage(path.join(__dirname, "pages/notes/index.html"));
+  const page = renderPage(indexContent, {
+    tabTitle: "Node.js Documentation - Home",
+  });
+  res.send(page);
 });
 
-app.get("/notes/:id", async (req, res) => {
-  const notePath = path.join(
-    __dirname,
-    "pages/notes/",
-    `${req.params.id}.html`
-  );
-
-
+// Individual notes
+app.get("/notes/:id", (req, res) => {
   try {
-    const file = await fs.promises.readFile(notePath, "utf-8");
-
-    res.send(file);
+    const noteContent = readPage(
+      path.join(__dirname, `pages/notes/${req.params.id}.html`)
+    );
+    const page = renderPage(noteContent, {
+      tabTitle: `Note ${req.params.id}`,
+    });
+    res.send(page);
   } catch (err) {
-    res.status(404).send("Note not found:" + err);
+    res.status(404).send("Note not found");
   }
-
-  //res.sendFile("pages/index.html", { root: __dirname });
 });
 
 const PORT = 8080;

@@ -1,8 +1,13 @@
 import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const header = readPage("./util/components/header.html");
-const navbar = readPage("./util/components/navbar.html");
-const footer = readPage("./util/components/footer.html");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const header = readPage(path.join(__dirname, "../components/header.html"));
+const navbar = readPage(path.join(__dirname, "../components/navbar.html"));
+const footer = readPage(path.join(__dirname, "../components/footer.html"));
 
 export function renderPage(pageContent, options = {}) {
   return (
@@ -19,6 +24,6 @@ export function renderPage(pageContent, options = {}) {
   );
 }
 
-export function readPage(path) {
-  return fs.readFileSync(path).toString();
+export function readPage(filePath) {
+  return fs.readFileSync(filePath).toString();
 }
