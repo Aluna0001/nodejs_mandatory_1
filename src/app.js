@@ -22,12 +22,13 @@ app.get("/notes/:id", async (req, res) => {
     `${req.params.id}.html`
   );
 
+
   try {
     const file = await fs.promises.readFile(notePath, "utf-8");
 
     res.send(file);
   } catch (err) {
-    res.status(404).send("Note not found:", err);
+    res.status(404).send("Note not found:" + err);
   }
 
   //res.sendFile("pages/index.html", { root: __dirname });
