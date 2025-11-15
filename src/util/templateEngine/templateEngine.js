@@ -16,10 +16,12 @@ export function renderPage(pageContent, options = {}) {
       .replace(
         "$$CSS_LINKS$$",
         options.cssLinks ||
-          '<link rel="stylesheet" href="/assets/css/style.css">'
+          '<link rel="stylesheet" href="/assets/css/main.css">'
       ) +
     navbar +
+    "<main>" +
     pageContent +
+    "</main>" +
     footer.replace("$$SCRIPT_LINKS$$", options.scriptLinks || "")
   );
 }

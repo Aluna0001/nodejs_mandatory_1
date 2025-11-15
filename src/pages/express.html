@@ -1,0 +1,25 @@
+<h1>Express.js</h1>
+<p>Express er et web application framework til Node.js:</p>
+
+<h2>Basic Server Setup</h2>
+<pre><code>import express from 'express';
+const app = express();
+
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+app.listen(8080, () => {
+  console.log('Server running on port 8080');
+});</code></pre>
+
+<h2>Vigtige koncepter</h2>
+<ul>
+  <li><strong>Routing:</strong> Definere endpoints (GET, POST, PUT, DELETE)</li>
+  <li><strong>Middleware:</strong> Funktioner der kører mellem request og response</li>
+  <li><strong>Static files:</strong> Servere CSS, images, JavaScript</li>
+  <li><strong>Server-Side Rendering:</strong> Generere HTML på serveren</li>
+</ul>
+
+<h2>REST API</h2>
+<p>Express bruges ofte til at lave RESTful APIs med JSON responses.</p>
